@@ -4,6 +4,7 @@ Written for personal use and in-game verification is currently very limited. Sim
 
 ## Usage
 Install the latest Node.js or Deno and drag & drop json or matbin files into the .bat file in the corresponding _exec folder.
+Or access [an online version](https://soilskxe.github.io/ER-matbin-js/html/matbinEditor.html) through your browser.
 
 ## Acknowledgements
 [JKAnderson](https://github.com/JKAnderson)'s awesome [SoulsFormats](https://github.com/JKAnderson/SoulsFormats) and [SoulsFormats](https://github.com/JKAnderson/MTD-Editor)
