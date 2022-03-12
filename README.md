@@ -7,4 +7,4 @@ Install the latest Node.js or Deno and drag & drop json or matbin files into the
 Or access [an online version](https://soilskxe.github.io/ER-matbin-js/html/matbinEditor.html) through your browser.
 
 ## Acknowledgements
-[JKAnderson](https://github.com/JKAnderson)'s awesome [SoulsFormats](https://github.com/JKAnderson/SoulsFormats) and [SoulsFormats](https://github.com/JKAnderson/MTD-Editor)
+[JKAnderson](https://github.com/JKAnderson)'s awesome [SoulsFormats](https://github.com/JKAnderson/SoulsFormats) and [MTD-Editor](https://github.com/JKAnderson/MTD-Editor)
