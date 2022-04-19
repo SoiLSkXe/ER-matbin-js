@@ -102,7 +102,7 @@ const adler32 = (data, adler = 1) => {
  * @param {Uint8Array} data - Data to calculate checksum
  * @returns {number} Computed checksum
  */
-const computeChecksum = data => const computeChecksum = data => adler32(data);
+const computeChecksum = data => adler32(data);
 
 // Better to rewrite by using Stream API or introducing a binary reader module
 export class MATBIN {
