@@ -81,37 +81,28 @@ const reverseChecksum = (data, checksum) => {
     return ((hi << 16) | low) >>> 0;
 }
 
+const adler32 = (data, adler = 1) => {
+    let a = adler & 0xFFFF;
+    let b = (adler >> 16) & 0xFFFF;
+    for (let i = 0, len = data.length; len;) {
+        let tlen = len > 5550 ? 5550: len;
+        len -= tlen;
+        do {
+            a += data[i++];
+            b += a;
+        } while(--tlen);
+        a %= 65521;
+        b %= 65521;
+    }
+    return ((b << 16) | a) >>> 0;
+}
+
 /**
  * Compute checksums used in matbin files
  * @param {Uint8Array} data - Data to calculate checksum
  * @returns {number} Computed checksum
  */
-const computeChecksum = data => {
-    let hi = 0;
-    let low = 1;
-    for (let i = data.length, j = 1; i--; ++j) {
-        const c = data[i];
-        low += c;
-        hi += c * j + 1;
-    }
-    if (low > 0xFFFF) {
-        console.warn([
-            '[computeChecksum] The sum of the given bytes',
-            `utf16: ${decodeUtf16(data)}`,
-            'exceeds 0xFFFF.',
-            'Please consider using shorter data as it is not known how to handle digits overflowing from 2 bytes'
-        ].join('\r\n'));
-    }
-    const carry = hi >>> 16;
-    hi &= 0xFFFF;
-    hi += carry * 0xF;
-
-    // Pretty weird that this operation is necessary
-    // This implementation may not be the correct calculation procedure
-    if (hi + 0xF > 0xFFFF) hi = (hi & 0xFFFF) + 0xF;
-
-    return ((hi << 16) | (low & 0xFFFF)) >>> 0;
-}
+const computeChecksum = data => const computeChecksum = data => adler32(data);
 
 // Better to rewrite by using Stream API or introducing a binary reader module
 export class MATBIN {
@@ -125,9 +116,9 @@ export class MATBIN {
         [0x05, {type: 'int', size: 2}],
         [0x08, {type: 'float', size: 1}],
         [0x09, {type: 'float', size: 2}],
-        [0x0A, {type: 'float', size: 5}], // Compared to the MTD format, this seems to correspond to foat3, but the actual size of the data contained is 5
+        [0x0A, {type: 'float', size: 5}], // Compared to the MTD format, this seems to correspond to float3, but the actual length of the stored data is 5.
         [0x0B, {type: 'float', size: 4}], // Mainly used for parameters associated with glow
-        [0x0C, {type: 'float', size: 5}]  // Compared to the MTD format, this seems to correspond to foat4, but the actual size of the data contained is 5
+        [0x0C, {type: 'float', size: 5}]  // Compared to the MTD format, this seems to correspond to float4, but the actual length of the stored data is 5.
     ])
 
     /** @type {string} */
